@@ -1,0 +1,24 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# local environment files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Original image source copies; the optimized website assets live in /public/images.
+/before-and-after.png
+/commercial-solar-project.png
+/home-page-hero.png
+/homeowner-consultation.png
+/panel-detail-image.png
+/residential-installation.png
