@@ -42,21 +42,38 @@ const faqs = [
 ];
 
 export default function Home() {
-  return (
-    <main>
-      <a className="skip-link" href="#main-content">Skip to content</a>
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map(([question, answer]) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: answer,
+      },
+    })),
+  };
 
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Araw Solar home">
+  return (
+    <main id="main-container">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <a className="skip-link" href="#main-content" id="skip-to-content-link">Skip to content</a>
+
+      <header className="site-header" id="site-header">
+        <a className="brand" href="#top" aria-label="Araw Solar home" id="header-brand-link">
           <span className="brand-mark" aria-hidden="true" />
           <span>araw<span>solar</span></span>
         </a>
-        <nav aria-label="Primary navigation">
-          <a href="#solutions">Solutions</a>
-          <a href="#process">How it works</a>
-          <a href="#faq">FAQ</a>
+        <nav aria-label="Primary navigation" id="header-nav">
+          <a href="#solutions" id="nav-solutions-link">Solutions</a>
+          <a href="#process" id="nav-process-link">How it works</a>
+          <a href="#faq" id="nav-faq-link">FAQ</a>
         </nav>
-        <a className="button button-small" href="#quote">Get a free assessment</a>
+        <a className="button button-small" href="#quote" id="header-cta-btn">Get a free assessment</a>
       </header>
 
       <section className="hero" id="top">
@@ -77,17 +94,17 @@ export default function Home() {
             your property, your priorities, and what comes next.
           </p>
           <div className="hero-actions">
-            <a className="button button-solar" href="#quote">Plan your solar system</a>
-            <a className="text-link text-link-light" href="#solutions">Explore solutions</a>
+            <a className="button button-solar" href="#quote" id="hero-plan-btn">Plan your solar system</a>
+            <a className="text-link text-link-light" href="#solutions" id="hero-explore-link">Explore solutions</a>
           </div>
         </div>
         <div className="hero-bottom page-width">
           <p>From the first roof check to the final switch-on.</p>
-          <a href="#process">See how it works <span aria-hidden="true">↓</span></a>
+          <a href="#process" id="hero-process-link">See how it works <span aria-hidden="true">↓</span></a>
         </div>
       </section>
 
-      <section className="intro page-width section-space">
+      <section className="intro page-width section-space" id="intro-section">
         <p className="eyebrow">A better place to start</p>
         <div className="intro-grid">
           <h2>Solar should feel clear from day one.</h2>
@@ -96,7 +113,7 @@ export default function Home() {
               Araw Solar brings a calm, practical approach to clean energy. We listen first,
               inspect carefully, and shape every recommendation around the people and places it serves.
             </p>
-            <a className="text-link" href="#quote">Talk to a solar specialist</a>
+            <a className="text-link" href="#quote" id="intro-specialist-link">Talk to a solar specialist</a>
           </div>
         </div>
       </section>
@@ -110,23 +127,23 @@ export default function Home() {
           <p>Whether you&apos;re planning for your home or your operation, we start with the realities of your space.</p>
         </div>
         <div className="solution-grid page-width">
-          {solutions.map((solution) => (
-            <article className="solution-card" key={solution.title}>
+          {solutions.map((solution, idx) => (
+            <article className="solution-card" key={solution.title} id={`solution-card-${idx + 1}`}>
               <div className="solution-image-wrap">
                 <Image src={solution.image} alt={solution.alt} fill sizes="(max-width: 760px) 100vw, 50vw" />
               </div>
               <div className="solution-content">
-                <p className="card-index">0{solutions.indexOf(solution) + 1}</p>
+                <p className="card-index">0{idx + 1}</p>
                 <h3>{solution.title}</h3>
                 <p>{solution.copy}</p>
-                <a className="text-link" href="#quote">Start a conversation</a>
+                <a className="text-link" href="#quote" id={`solution-link-${idx + 1}`}>Start a conversation</a>
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="approach page-width section-space">
+      <section className="approach page-width section-space" id="approach-section">
         <div className="approach-image-wrap">
           <Image
             src="/images/before-and-after.webp"
@@ -142,7 +159,7 @@ export default function Home() {
             Your home or workplace deserves more than a one-size-fits-all quote. Our process considers the site,
             your patterns of energy use, and the result you&apos;re working toward.
           </p>
-          <a className="button button-solar" href="#quote">Book an assessment</a>
+          <a className="button button-solar" href="#quote" id="approach-book-btn">Book an assessment</a>
         </div>
       </section>
 
@@ -154,8 +171,8 @@ export default function Home() {
             <p>We keep the process visible, considered, and easy to follow.</p>
           </div>
           <div className="process-grid">
-            {process.map(([number, title, copy]) => (
-              <article key={number}>
+            {process.map(([number, title, copy], idx) => (
+              <article key={number} id={`process-step-${idx + 1}`}>
                 <span>{number}</span>
                 <h3>{title}</h3>
                 <p>{copy}</p>
@@ -165,7 +182,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="consultation section-space">
+      <section className="consultation section-space" id="consultation-section">
         <div className="page-width consultation-grid">
           <div className="consultation-copy">
             <p className="eyebrow">A plan you can understand</p>
@@ -173,7 +190,7 @@ export default function Home() {
             <p>
               We&apos;ll talk through your property, answer the questions that matter, and help you see the next best step with confidence.
             </p>
-            <a className="text-link" href="#faq">Read common questions</a>
+            <a className="text-link" href="#faq" id="consultation-faq-link">Read common questions</a>
           </div>
           <div className="consultation-image-wrap">
             <Image
@@ -186,7 +203,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="craft page-width section-space">
+      <section className="craft page-width section-space" id="craft-section">
         <div className="craft-image-wrap">
           <Image
             src="/images/panel-detail-image.webp"
@@ -217,10 +234,10 @@ export default function Home() {
             <p>Every project begins with a conversation. These are a few good places to start.</p>
           </div>
           <div className="faq-list">
-            {faqs.map(([question, answer]) => (
-              <details key={question}>
-                <summary>{question}</summary>
-                <p>{answer}</p>
+            {faqs.map(([question, answer], idx) => (
+              <details key={question} id={`faq-item-${idx + 1}`}>
+                <summary id={`faq-summary-${idx + 1}`}>{question}</summary>
+                <p id={`faq-answer-${idx + 1}`}>{answer}</p>
               </details>
             ))}
           </div>
@@ -240,27 +257,27 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="site-footer">
+      <footer className="site-footer" id="site-footer">
         <div className="page-width footer-main">
           <div className="footer-brand-block">
-            <a className="brand" href="#top" aria-label="Araw Solar home">
+            <a className="brand" href="#top" aria-label="Araw Solar home" id="footer-brand-link">
               <span className="brand-mark" aria-hidden="true" />
               <span>araw<span>solar</span></span>
             </a>
             <p>Thoughtful solar systems for Philippine homes and businesses.</p>
-            <a className="footer-cta" href="#quote">Start your solar plan <span aria-hidden="true">↗</span></a>
+            <a className="footer-cta" href="#quote" id="footer-start-plan-link">Start your solar plan <span aria-hidden="true">↗</span></a>
           </div>
           <div className="footer-columns">
             <div className="footer-column">
               <p className="footer-label">Explore</p>
-              <a href="#solutions">Solar solutions</a>
-              <a href="#process">How it works</a>
-              <a href="#faq">Frequently asked questions</a>
+              <a href="#solutions" id="footer-solutions-link">Solar solutions</a>
+              <a href="#process" id="footer-process-link">How it works</a>
+              <a href="#faq" id="footer-faq-link">Frequently asked questions</a>
             </div>
             <div className="footer-column">
               <p className="footer-label">Contact us</p>
-              <a href="mailto:hello@yourcompany.ph">hello@yourcompany.ph</a>
-              <a href="tel:+639000000000">+63 900 000 0000</a>
+              <a href="mailto:hello@yourcompany.ph" id="footer-email-link">hello@yourcompany.ph</a>
+              <a href="tel:+639000000000" id="footer-phone-link">+63 900 000 0000</a>
               <span>Your City, Philippines</span>
             </div>
           </div>
@@ -268,10 +285,10 @@ export default function Home() {
         <div className="page-width footer-bottom">
           <p>© {new Date().getFullYear()} Araw Solar. All rights reserved.</p>
           <div>
-            <a href="#top">Privacy policy</a>
-            <a href="#top">Terms of use</a>
-            <a href="#top">Facebook</a>
-            <a href="#top">Instagram</a>
+            <a href="#top" id="footer-privacy-link">Privacy policy</a>
+            <a href="#top" id="footer-terms-link">Terms of use</a>
+            <a href="#top" id="footer-fb-link">Facebook</a>
+            <a href="#top" id="footer-ig-link">Instagram</a>
           </div>
         </div>
       </footer>
